@@ -6,7 +6,7 @@ const commentSchema = new Schema(
   {
     text: {
       type: String,
-      required: 'You need to leave a comment!',
+      required: 'Comment cannot be empty!',
       minlength: 1,
       maxlength: 280
     },

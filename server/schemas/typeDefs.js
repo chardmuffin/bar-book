@@ -22,9 +22,11 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
-    friendCount: Int
     comments: [Comment]
+    friendCount: Int
     friends: [User]
+    savedCocktails: [Cocktail]
+    authoredCocktails: [Cocktail]
   }
 
   type Auth {
@@ -34,28 +36,34 @@ const typeDefs = gql`
 
   type Cocktail {
     _id: ID
+    alternateId: ID
     name: String
+    thumbnail: String
     instructions: String
     ingredients: [String]
     measurements: [String]
     glass: String
-    author: User
+    createdAt: String
+    username: String
+    commentCount: Int
     comments: [Comment]
-    thumbnail: String
   }
 
   type Query {
     me: User
+    cocktails: [Cocktail]
+    cocktail(_id: ID!): Cocktail
     users: [User]
     user(username: String!): User
-    comments(username: String): [Comment]
+    comments(cocktailId: String): [Comment]
     comment(_id: ID!): Comment
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    addComment(text: String!): Comment
+    addCocktail(alternateId: ID, name: String!, thumbnail: String, instructions: String!, ingredients: [String]!, measurements: [String]!, glass: String): Cocktail
+    addComment(cocktailId: ID!, text: String!): Comment
     addReaction(commentId: ID!, reactionBody: String!): Comment
     addFriend(friendId: ID!): User
   }

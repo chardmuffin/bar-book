@@ -1,23 +1,25 @@
-const { User, Comment } = require('../models');
+const { User, Comment, Cocktail } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
-const { signToken } = require('../utils/auth')
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
     me: async(parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({})
-        .select('-__v -password')
-        .populate('comments')
-        .populate('friends')
+          .select('-__v -password')
+          .populate('comments')
+          .populate('friends')
+          .populate('savedCocktails')
+          .populate('authoredCocktails');
 
         return userData;
       }
 
       throw new AuthenticationError('Not logged in');
     },
-    comments: async (parent, { username }) => {
-      const params = username ? { username } : {};
+    comments: async (parent, { cocktailId }) => {
+      const params = cocktailId ? { cocktailId } : {};
       return Comment.find(params).sort({ createdAt: -1 });
     },
     comment: async (parent, { _id }) => {
@@ -27,13 +29,24 @@ const resolvers = {
       return User.find()
         .select('-__v -password')
         .populate('friends')
-        .populate('comments');
+        .populate('comments')
+        .populate('savedCocktails')
+        .populate('authoredCocktails');
     },
     user: async(parent, { username }) => {
       return User.findOne({ username })
         .select('-__v -password')
         .populate('friends')
+        .populate('comments')
+        .populate('savedCocktails')
+        .populate('authoredCocktails');
+    },
+    cocktails: async () => {
+      return Cocktail.find()
         .populate('comments');
+    },
+    cocktail: async (parent, { _id }) => {
+      return Cocktail.findOne({ _id }).populate('comments');
     }
   },
   Mutation: {
@@ -60,9 +73,38 @@ const resolvers = {
     
       return { token, user };
     },
-    addComment: async (parent, args, context) => {
+    addCocktail: async (parent, { alternateId, ...args }, context) => {
       if (context.user) {
-        const comment = await Comment.create({ ...args, username: context.user.username });
+
+        //if this cocktail is from the API (has an alternateId), a user didn't create it
+        if (alternateId) {
+          const cocktail = await Cocktail.create({ ...args, alternateId: alternateId, username: "TheCocktailDB.com" });
+          return cocktail;
+        }
+
+        //else it is an original recipe by the user
+        const cocktail = await Cocktail.create({ ...args, username: context.user.username });
+
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { authoredCocktails: cocktail._id } },
+          { new: true }
+        )
+
+        return cocktail;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    addComment: async (parent, { cocktailId, text }, context) => {
+      if (context.user) {
+        const comment = await Comment.create({ text, username: context.user.username });
+
+        await Cocktail.findByIdAndUpdate(
+          { _id: cocktailId },
+          { $push: { comments: comment._id } },
+          { new: true }
+        );
     
         await User.findByIdAndUpdate(
           { _id: context.user._id },

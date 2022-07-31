@@ -23,15 +23,27 @@ const userSchema = new Schema(
     comments: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Comment'
+        ref: "Comment"
       }
     ],
     friends: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: "User"
       }
-    ]
+    ],
+    savedCocktails: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Cocktail"
+      }
+    ],
+    authoredCocktails: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Cocktail"
+      }
+    ],
   },
   {
     toJSON: {
