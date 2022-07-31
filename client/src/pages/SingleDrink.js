@@ -1,21 +1,21 @@
 import React from 'react';
 
-const SingleThought = props => {
+const SingleDrink= props => {
   return (
     <div>
-      <div className="card mb-3">
+      <div className="card">
         <p className="card-header">
           <span style={{ fontWeight: 700 }} className="text-light">
             Username
           </span>{' '}
-          thought on createdAt
+          created on createdAt
         </p>
         <div className="card-body">
-          <p>Thought Text</p>
+          <p>Drink Text</p>
         </div>
       </div>
     </div>
   );
 };
 
-export default SingleThought;
+export default SingleDrink;

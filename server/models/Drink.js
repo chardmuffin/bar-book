@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
-const cocktailSchema = new Schema(
+const drinkSchema = new Schema(
   {
     alternateId: {
       type: String
@@ -56,10 +56,10 @@ const cocktailSchema = new Schema(
   }
 );
 
-cocktailSchema.virtual('commentCount').get(function() {
+drinkSchema.virtual('commentCount').get(function() {
   return this.comments.length;
 });
 
-const Cocktail = model('Cocktail', cocktailSchema);
+const Drink = model('Drink', drinkSchema);
 
-module.exports = Cocktail;
+module.exports = Drink;

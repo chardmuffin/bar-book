@@ -32,16 +32,16 @@ const userSchema = new Schema(
         ref: "User"
       }
     ],
-    savedCocktails: [
+    savedDrinks: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Cocktail"
+        ref: "Drink"
       }
     ],
-    authoredCocktails: [
+    authoredDrinks: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Cocktail"
+        ref: "Drink"
       }
     ],
   },
@@ -70,6 +70,10 @@ userSchema.methods.isCorrectPassword = async function(password) {
 userSchema.virtual('friendCount').get(function() {
   return this.friends.length;
 });
+
+userSchema.virtual('drinkCount').get(function() {
+  return this.authoredDrinks.length
+})
 
 const User = model('User', userSchema);
 
