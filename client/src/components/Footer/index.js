@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,13 +9,13 @@ const Footer = () => {
   return (
     <Navbar bg="dark" variant="dark" fixed="bottom">
       <Nav className='container-fluid justify-content-around'>
-        <Nav.Link href="#home"><FontAwesomeIcon icon={ faMartiniGlass } /></Nav.Link>
-        <Nav.Link href="#search"><FontAwesomeIcon icon={ faMagnifyingGlass } /></Nav.Link>
-        <Nav.Link href="#create"><FontAwesomeIcon icon={ faCirclePlus } /></Nav.Link>
-        <Nav.Link href="#recipes"><FontAwesomeIcon icon={ faBook } /></Nav.Link>
-        <Nav.Link href="#profile"><FontAwesomeIcon icon={ faUser } /></Nav.Link>
+        <Nav.Link href="/"><FontAwesomeIcon icon={ faMartiniGlass } /></Nav.Link>
+        <Nav.Link href="/search"><FontAwesomeIcon icon={ faMagnifyingGlass } /></Nav.Link>
+        <Nav.Link href="/create-drink"><FontAwesomeIcon icon={ faCirclePlus } /></Nav.Link>
+        <Nav.Link href="/signup"><FontAwesomeIcon icon={ faBook } /></Nav.Link>
+        <Nav.Link href="/profile"><FontAwesomeIcon icon={ faUser } /></Nav.Link>
       </Nav>
-  </Navbar>
+    </Navbar>
   );
 };
 

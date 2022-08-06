@@ -1,36 +1,56 @@
-import React from 'react';
+import React from "react";
+import { Link } from 'react-router-dom'
+import { Container, Card } from "react-bootstrap";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-const DrinkList = ({ drinks, name }) => {
+const DrinkList = ({ drinks }) => {
   if (!drinks.length) {
-    return <h3>No Drinks Found</h3>;
+    return <h3>None Found!</h3>;
   }
 
-  console.log(name)
+  // TODO: calculate the height of the rendered content
+  // card-spacer height = Card.Header height + Card.Body height - drink.thumbnail height
 
   return (
-    <div>
+    <Container>
       
       {drinks &&
         drinks.map(drink => (
-          <div key={drink._id} className="card mb-3">
-            <h3>{drink.name}</h3>
-            <p className="card-header">
-              {drink.username}
-              {(drink.username !== "TheCocktailDB.com") ? (
-                <p className="created-on">`Created on ${drink.createdAt}`</p>
-              ) : ("")
-              }
-            </p>
-            <div className="card-body">
-              <p>{drink.ingredients.join(", ")}</p>
-              <p className="mb-0">
-                Comments: {drink.commentCount} || Click to{' '}
-                {drink.commentCount ? 'see' : 'start'} the discussion!
-              </p>
-            </div>
-          </div>
+          <Card key={drink._id} border="dark" bg="dark">
+            <Card.Img src={drink.thumbnail} />
+            <div className='card-spacer'></div>
+            <Card.ImgOverlay >
+              <Container className='card-content-container'>
+                
+                <Card.Header>
+                  <Link to={`/drink/${drink._id}`}>
+                    <Card.Title>{drink.name}</Card.Title>
+                  </Link>
+                  <Link to={`/profile/${drink.username}`}>
+                    by {drink.username}
+                  </Link>
+                  {drink.username !== "TheCocktailDB.com" && <Card.Text className="created-on">Created on {drink.createdAt}</Card.Text>}
+                </Card.Header>
+                
+                <Card.Body>
+                  <Link to={`/drink/${drink._id}`}>
+                    <Card.Text>{drink.glass}</Card.Text>
+                    <Row>
+                      <Col>
+                        <Card.Text>{drink.measurements.join(", \r\n")}</Card.Text>
+                      </Col>
+                      <Col>
+                        <Card.Text>{drink.ingredients.join(", ")}</Card.Text>
+                      </Col>
+                    </Row>
+                  </Link>
+                </Card.Body>
+              </Container>
+            </Card.ImgOverlay>
+          </Card>
         ))}
-    </div>
+    </Container>
   );
 };
 

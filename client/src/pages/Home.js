@@ -9,7 +9,6 @@ const Home = () => {
   const { loading, data } = useQuery(QUERY_DRINKS);
 
   const drinks = data?.drinks || [];
-  console.log(drinks);
 
   return (
     <main>
@@ -18,7 +17,7 @@ const Home = () => {
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <DrinkList drinks={drinks} title="yum"></DrinkList>
+            <DrinkList drinks={drinks}></DrinkList>
           )}
         </div>
       </div>
