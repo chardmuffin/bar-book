@@ -74,27 +74,28 @@ const resolvers = {
       return { token, user };
     },
     addDrink: async (parent, { alternateId, ...args }, context) => {
-      if (context.user) {
+
+      let newdrink;
+      //if (context.user) {
 
         //if this drink is from the API (has an alternateId), a user didn't create it
         if (alternateId) {
-          const drink = await Drink.create({ ...args, alternateId: alternateId, username: "TheCocktailDB.com" });
-          return drink;
+          newdrink = await Drink.create({ ...args, alternateId: alternateId, username: "TheCocktailDB.com" });
+        } else { //else it is an original recipe by the user
+          newdrink = await Drink.create({ ...args, username: context.user.username });
         }
-
-        //else it is an original recipe by the user
-        const drink = await Drink.create({ ...args, username: context.user.username });
+        
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { authoredDrinks: drink._id } },
+          { $addToSet: { authoredDrinks: newdrink._id } },
           { new: true }
         )
 
-        return drink;
-      }
+        return newdrink;
+      //}
 
-      throw new AuthenticationError('You need to be logged in!');
+      //throw new AuthenticationError('You need to be logged in!');
     },
     addComment: async (parent, { drinkId, text }, context) => {
       if (context.user) {

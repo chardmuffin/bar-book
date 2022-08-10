@@ -17,7 +17,7 @@ const Home = () => {
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <DrinkList drinks={drinks}></DrinkList>
+              <DrinkList drinks={drinks}></DrinkList>
           )}
         </div>
       </div>

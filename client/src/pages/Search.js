@@ -4,9 +4,9 @@ import Form from 'react-bootstrap/Form';
 import DrinkList from "../components/DrinkList";
 
 const SearchDrinks = () => {
-  // create state for holding returned opentripmap api data
+  // create state for holding returned api data
   const [searchedDrinks, setSearchedDrinks] = useState([]);
-  // create state for holding our search field data
+  // create state for holding search field string value
   const [searchInput, setSearchInput] = useState("");
 
   const onSubmit = async (event) => {
@@ -25,7 +25,7 @@ const SearchDrinks = () => {
       );
       const { drinks } = await response.json();
 
-      console.log("queried drinks: ", drinks);
+      console.log("queried drinks raw data: ", drinks);
 
       const drinkData = drinks.map((drink) => {
 
@@ -40,11 +40,12 @@ const SearchDrinks = () => {
           alternateId: drink.idDrink,
           name: drink.strDrink,
           glass: drink.strGlass,
-          instructions: drink.strInstructions,
           ingredients: filteredIngredients,
           measurements: filteredMeasurements,
+          instructions: drink.strInstructions,
           username: "TheCocktailDB.com",
-          thumbnail: drink.strDrinkThumb
+          thumbnail: drink.strDrinkThumb,
+          isSearch: true
         }
       });
 
@@ -63,7 +64,7 @@ const SearchDrinks = () => {
         <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Search for a Drink</Form.Label>
-            <Form.Control type="textarea" rows={1} placeholder="Mojito" onChange={onSubmit} />
+            <Form.Control type="textarea" rows={1} placeholder="mojito" onChange={onSubmit} />
           </Form.Group>
         </Form>
       </Container>

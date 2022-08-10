@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
@@ -28,8 +27,8 @@ const Profile = () => {
       <div className="flex-row justify-space-between mb-3">
         <div className="col-12 mb-3 col-lg-8">
           {user.authoredDrinks
-          ? <DrinkList drinks={user.authoredDrinks} title={`${user.username} created the...`} />
-          : <h3>no drinks created</h3>}
+          ? <><h3>{user.username}'s creations: </h3><DrinkList drinks={user.authoredDrinks} /></>
+          : <h3>{`${user.username} has not created any drinks yet.`}</h3>}
         </div>
       </div>
     </div>

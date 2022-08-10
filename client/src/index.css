@@ -33,7 +33,7 @@ body {
   font-weight: 400;
   line-height: 1.5;
   font-size: 20px;
-  color: var(--dark);
+  color: var(--light);
   background-color: var(--dark);
 }
 
@@ -83,13 +83,8 @@ a {
   text-decoration: none;
 }
 
-.card-spacer {
-  height: calc();
-}
 
-
-/* =============================overwrite/add to bootstrap============================ */
-
+/* =============================overwrite/add to bootstrap components============================ */
 
 .footer {
   background-color: var(--darker);
@@ -107,17 +102,30 @@ a {
 
 .card-title {
   color: var(--light);
+  font-size: 1.5rem;
+}
+
+.card-subtitle {
+  font-size: .8rem;
+  float: right;
 }
 
 .card-body {
   background-color: rgba(15, 15, 15, 0.6);
-  
+  font-size: .95rem;
+}
+
+.card-body ol span {
+  float: right;
+  align-content: center;
 }
 
 .card-text {
   color: var(--light);
+  font-size: 1rem;
+  margin-bottom: .5rem;
 }
 
-.drink-thumbnail {
-  background-attachment: fixed;
+.card-text span {
+  font-weight: bold;
 }

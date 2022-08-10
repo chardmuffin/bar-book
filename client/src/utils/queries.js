@@ -93,12 +93,27 @@ export const QUERY_USER = gql`
         _id
         alternateId
         name
+        thumbnail
         ingredients
         measurements
         instructions
         glass
         createdAt
+        username
         commentCount
+        comments {
+          _id
+          text
+          username
+          createdAt
+          reactionCount
+          reactions {
+            _id
+            reactionBody
+            username
+            createdAt
+          }
+        }
       }
     }
   }

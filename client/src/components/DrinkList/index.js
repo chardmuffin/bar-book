@@ -1,54 +1,76 @@
 import React from "react";
-import { Link } from 'react-router-dom'
 import { Container, Card } from "react-bootstrap";
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
+import { Link } from 'react-router-dom'
+
+// drink list is called to display a list of drink cards.
+// Component is used in Search.js, Profile.js and anywhere else needing to display cards of drink recipe previews
+// the drinks from the args may be in format:
+// drink {
+//   _id : String representing unique id of the drink.         WARNING: drinks from API The CocktailDB.com do not have _id yet!
+//   alternateId : drinks from API The CocktailDB.com have this, is unique
+//   name : String name of the drink
+//   thumbnail : String href for the drink picture
+//   instructions : String for written instructions how to make drink
+//   ingredients : [String] 1 ingredient per String, several Strings in an array (sometimes more than drink.measurements)
+//   measurements : [String] 1 corresponding measurement for each ingredient in drink.ingredients --units may need converting 
+//   glass : String name of the glass to serve the drink in
+//   createdAt : Date when this was added to the db.
+//   username : String username that submitted this drink, or "TheCocktailDB.com"
+//   commentCount : Number number of comments on this drink
+//   comments {
+//     _id
+//     createdAt
+//     username
+//     text
+//     reactionCount
+//     reactions {
+//       _id
+//       createdAt
+//       username
+//       reactionBody
+//     }
+//   }
+// }
 const DrinkList = ({ drinks }) => {
-  if (!drinks.length) {
-    return <h3>None Found!</h3>;
-  }
 
-  // TODO: calculate the height of the rendered content
-  // card-spacer height = Card.Header height + Card.Body height - drink.thumbnail height
+  if (!drinks.length) {
+    return <h5 style={{textAlign: "center", marginTop: "25vh"}}>None Found!</h5>;
+  }
 
   return (
     <Container>
       
       {drinks &&
         drinks.map(drink => (
-          <Card key={drink._id} border="dark" bg="dark">
-            <Card.Img src={drink.thumbnail} />
-            <div className='card-spacer'></div>
-            <Card.ImgOverlay >
-              <Container className='card-content-container'>
-                
-                <Card.Header>
-                  <Link to={`/drink/${drink._id}`}>
+          // link to the SingleDrink page and send the drink with state
+          <Link
+            to={`/drink/${drink._id ? drink._id : drink.alternateId}`}
+            state={{ drink: drink }}
+            key={drink._id ? drink._id : drink.alternateId}
+          >
+            <Card  border="dark" bg="dark">
+              {drink.thumbnail && <Card.Img src={drink.thumbnail} alt={drink.name}/>}
+              
+              <Card.ImgOverlay >
+                <Container className='card-content-container'>    
+                  <Card.Header>
                     <Card.Title>{drink.name}</Card.Title>
-                  </Link>
-                  <Link to={`/profile/${drink.username}`}>
-                    by {drink.username}
-                  </Link>
-                  {drink.username !== "TheCocktailDB.com" && <Card.Text className="created-on">Created on {drink.createdAt}</Card.Text>}
-                </Card.Header>
-                
-                <Card.Body>
-                  <Link to={`/drink/${drink._id}`}>
-                    <Card.Text>{drink.glass}</Card.Text>
-                    <Row>
-                      <Col>
-                        <Card.Text>{drink.measurements.join(", \r\n")}</Card.Text>
-                      </Col>
-                      <Col>
-                        <Card.Text>{drink.ingredients.join(", ")}</Card.Text>
-                      </Col>
-                    </Row>
-                  </Link>
-                </Card.Body>
-              </Container>
-            </Card.ImgOverlay>
-          </Card>
+                    <Card.Subtitle>by {drink.username}</Card.Subtitle>
+                    {drink.username !== "TheCocktailDB.com" && <Card.Subtitle className="created-on">Created on {drink.createdAt}</Card.Subtitle>}
+                  </Card.Header>
+                  <Card.Body>
+                    <Card.Text>Served in a <span>{drink.glass}</span>:</Card.Text>
+                      <ol>
+                        {drink.ingredients.map((ingredient, index) => (
+                          <li key={index}>{ingredient}<span>{drink.measurements[index]}</span></li>
+                        ))}
+                      </ol>
+                  </Card.Body>
+                </Container>
+              </Card.ImgOverlay>
+            </Card>
+          </Link>
         ))}
     </Container>
   );
