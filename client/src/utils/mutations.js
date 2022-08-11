@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const SAVE_DRINK = gql`
-  mutation addDrink($alternateId: ID, $name: String!, $thumbnail: String, $instructions: String!, $ingredients: [String]!, $measurements: [String]!, $glass: String) {
-    addDrink(alternateId: $alternateId, name: $name, thumbnail: $thumbnail, instructions: $instructions, ingredients: $ingredients, measurements: $measurements, glass: $glass) {
+  mutation addDrink($newDrink: drinkInput!) {
+    addDrink(newDrink: $newDrink) {
       _id
       alternateId
       name

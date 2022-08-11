@@ -25,7 +25,7 @@ const SearchDrinks = () => {
       );
       const { drinks } = await response.json();
 
-      console.log("queried drinks raw data: ", drinks);
+      //console.log("queried drinks raw data: ", drinks);
 
       const drinkData = drinks.map((drink) => {
 
@@ -44,15 +44,14 @@ const SearchDrinks = () => {
           measurements: filteredMeasurements,
           instructions: drink.strInstructions,
           username: "TheCocktailDB.com",
-          thumbnail: drink.strDrinkThumb,
-          isSearch: true
+          thumbnail: drink.strDrinkThumb
         }
       });
 
       console.log("cleaned search results: ", drinkData);
 
       setSearchedDrinks(drinkData);
-      setSearchInput("");
+      //setSearchInput("");
     } catch (err) {
       console.error(err);
     }
@@ -64,7 +63,7 @@ const SearchDrinks = () => {
         <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Search for a Drink</Form.Label>
-            <Form.Control type="textarea" rows={1} placeholder="mojito" onChange={onSubmit} />
+            <Form.Control type="textarea" rows={1} placeholder="old fashioned" onChange={onSubmit} />
           </Form.Group>
         </Form>
       </Container>

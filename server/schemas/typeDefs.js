@@ -50,10 +50,21 @@ const typeDefs = gql`
     comments: [Comment]
   }
 
+  input drinkInput {
+    alternateId: ID,
+    name: String!,
+    thumbnail: String,
+    instructions: String!,
+    ingredients: [String]!,
+    measurements: [String]!,
+    glass: String,
+    username: String
+  }
+
   type Query {
     me: User
     drinks: [Drink]
-    drink(_id: ID!): Drink
+    drink(_id: ID!, alternateId: ID): Drink
     users: [User]
     user(username: String!): User
     comments(drinkId: String): [Comment]
@@ -63,10 +74,11 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    addDrink(alternateId: ID, name: String!, thumbnail: String, instructions: String!, ingredients: [String]!, measurements: [String]!, glass: String): Drink
+    addDrink(newDrink: drinkInput!): Drink
     addComment(drinkId: ID!, text: String!): Comment
     addReaction(commentId: ID!, reactionBody: String!): Comment
     addFriend(friendId: ID!): User
+    deleteDrink(drinkId: ID!): Drink
   }
 `;
 

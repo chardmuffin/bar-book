@@ -2,10 +2,10 @@ import { useQuery } from '@apollo/client';
 import { QUERY_DRINK } from '../utils/queries';
 import Card from 'react-bootstrap/Card';
 import { Container } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import { SAVE_DRINK } from '../utils/mutations';
 import { useMutation } from "@apollo/client";
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react'
 
 // SingleDrink is a page with detail on a single drink.
 // Page is linked to from DrinkList component
@@ -37,68 +37,101 @@ import { useLocation } from 'react-router-dom';
 //   }
 // }
 
-//TODO
+// TODO
 // drinks from API TheCocktailDB.com need to be added to this db once viewed.    (to display as "recently viewed drinks" for home page),
-// if a drink from DrinkList is clicked/tapped, call mutation addDrink to save the current drink to the API 
+// if a drink from DrinkList is clicked/tapped, call mutation addDrink to save the current drink to the DB 
 // WARNING: drinks from API The CocktailDB.com do not have _id yet!
-const SingleDrink = async ({ drink }) => {
+const SingleDrink = drink => {
 
-  console.log("drink from component props: ", drink)
-  const location = useLocation();
-  const { _id: drinkId } = useParams(); //only used if searched - when the drink is already part of the db (if it has an _id), use to load it:
-  console.log("location.state", location.state)
-  console.log("_id: drinkId", drinkId)
+  const [currentDrink, setCurrentDrink] = useState(null)
 
-  // define saveDrink() from mutation
+  //locationDrink will only have a value if the SingleDrink page was navigated to from a DrinkList
+  const useLocationState = useLocation().state || {}
+  const locationDrink = useLocationState.drink;
   const [addDrink] = useMutation(SAVE_DRINK);
 
-  //if it is new to the db, must be from API. Add it to the db! and it will become data.drink
-  drinkId?.length <= 7 && await addDrink({variables: {drink: {...drink}}})
-  
-  const { loading, data } = await useQuery(QUERY_DRINK, {
-    variables: { _id: drinkId || location.state.drink._id }
-  });
+  const _id = useParams().id;
 
-  console.log("from save: ", data.drink)
+  // NOTE: if the _id.length <= 7, QUERY_DRINK will automatically query for alternateId instead!
+  const { error, loading, data } = useQuery(QUERY_DRINK, {
+    
+    variables: { id: _id }
+    // OR:     { alternateId: _id }
+  })
 
-  const currentDrink = data.drink || location.state.drink
-  
-  
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+
+    // declare the async func to add drink to db and set the newly added drink as current
+    const createNewDrink = async () => {
+      //console.log("drink not found in db, adding", locationDrink.alternateId);
+
+      const results = await addDrink({
+        variables: { newDrink: { ...locationDrink } },
+      })
+
+      //console.log("drink not found in db, added:", results.data.addDrink)
+      
+      setCurrentDrink(results.data.addDrink);
+    }
+
+    // if the query has an error
+    if (error) console.log("error", error.message);
+
+    // if the query finds the drink in db, set it to the currentDrink
+    // if query finds empty drink, create new drink from state to the db
+    // console.log("data", data)
+    if (data) {
+      if (data.drink) {
+        console.log("db match found, displaying:", data.drink)
+        setCurrentDrink(data.drink)
+      } 
+      else {
+        createNewDrink()
+          .catch(err => console.log(err))
+      }
+    }
+
+  }, [locationDrink, addDrink, error, data])
 
   return (
-
-    <Card className="bg-dark text-white">
-      <Container className='card-content-container'>
-        <Card.Header>
-          <Card.Title>{drink.name}</Card.Title>
-          <Link to={`/profile/${drink.username}`} className="card-subtitle">
-            <Card.Subtitle>by {drink.username}</Card.Subtitle>
-          </Link>
-          {drink.username !== "TheCocktailDB.com" && <Card.Subtitle className="created-on">Created on {drink.createdAt}</Card.Subtitle>}
-        </Card.Header>
-        <Card.Body>
-          <ol>
-            {drink.ingredients.map((ingredient, index) => (
-              <li key={index}>{ingredient}<span>{drink.measurements[index]}</span></li>
-            ))}
-          </ol>
-          <Card.Text>Served in a <span>{drink.glass}</span>.</Card.Text>
-          <Card.Text>{drink.instructions}</Card.Text>
-        </Card.Body>
-        <Card.Img src={drink.thumbnail} alt="drink image" />
-      </Container>
-      {drink.comments.map(comment => (
-          <Card.Text className="pill mb-3" key={comment._id}>
-            {comment.text}
-            <Link to={`/profile/${comment.username}`}>
-              {comment.username} on {comment.createdAt}
+    // <div>fail</div>
+    <main>
+      {currentDrink===null ? (
+        <p>Loading...</p>
+      ) : (
+        <Card className="bg-dark text-white">
+        <Container className='card-content-container'>
+          <Card.Header>
+            <Card.Title>{currentDrink.name}</Card.Title>
+            <Link to={`/profile/${currentDrink.username}`} className="card-subtitle">
+              <Card.Subtitle>by {currentDrink.username}</Card.Subtitle>
             </Link>
-          </Card.Text>
-        ))}
-    </Card>
+            {currentDrink.username !== "TheCocktailDB.com" &&
+              <Card.Subtitle className="created-on">Created on {currentDrink.createdAt}</Card.Subtitle>
+            }
+          </Card.Header>
+          <Card.Body>
+            <ol>
+              {currentDrink.ingredients?.map((ingredient, index) => (
+                <li key={index}>{ingredient}<span>{currentDrink.measurements[index]}</span></li>
+              ))}
+            </ol>
+            <Card.Text>Served in a <span>{currentDrink.glass}</span>.</Card.Text>
+            <Card.Text>{currentDrink.instructions}</Card.Text>
+          </Card.Body>
+          <Card.Img src={currentDrink.thumbnail} alt="drink image" />
+        </Container>
+          {currentDrink.comments?.map(comment => (
+            <Card.Text className="pill mb-3" key={comment._id}>
+              {comment.text}
+              <Link to={`/profile/${comment.username}`}>
+                {comment.username} on {comment.createdAt}
+              </Link>
+            </Card.Text>
+          ))}
+        </Card>
+      )}
+    </main>
   );
 };
 

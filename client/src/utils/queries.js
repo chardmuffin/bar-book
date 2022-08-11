@@ -50,7 +50,7 @@ export const QUERY_DRINKS = gql`
 `;
 
 export const QUERY_DRINK = gql`
-  query drinks($id: ID!) {
+  query getSingleDrink($id: ID!) {
     drink(_id: $id) {
       _id
       alternateId

@@ -43,9 +43,13 @@ const resolvers = {
     },
     drinks: async () => {
       return Drink.find()
-        .populate('comments');
+        .populate('comments')
+        .sort( { createdAt: -1 });
     },
-    drink: async (parent, { _id }) => {
+    drink: async (parent, { _id, }) => {
+      if (_id.length <= 7) {
+        return Drink.findOne({ alternateId: _id }).populate('comments');
+      }
       return Drink.findOne({ _id }).populate('comments');
     }
   },
@@ -73,29 +77,29 @@ const resolvers = {
     
       return { token, user };
     },
-    addDrink: async (parent, { alternateId, ...args }, context) => {
+    addDrink: async (parent, { newDrink }, context) => {
 
-      let newdrink;
-      //if (context.user) {
+      //if this drink already has username "TheCocktailDB.com" then it's from the API
+      if (newDrink.username === "TheCocktailDB.com") {
+        const drinkAdded = await Drink.create({ ...newDrink, alternateId: newDrink.alternateId });
+        return drinkAdded;
+      }
 
-        //if this drink is from the API (has an alternateId), a user didn't create it
-        if (alternateId) {
-          newdrink = await Drink.create({ ...args, alternateId: alternateId, username: "TheCocktailDB.com" });
-        } else { //else it is an original recipe by the user
-          newdrink = await Drink.create({ ...args, username: context.user.username });
-        }
-        
-
-        await User.findByIdAndUpdate(
+      //else it is an original recipe by the user
+      if (context.user) {
+        let newdrink = await Drink.create({ ...newDrink, username: context.user.username });
+      
+        const userdata = await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $addToSet: { authoredDrinks: newdrink._id } },
           { new: true }
         )
 
-        return newdrink;
-      //}
+        console.log(userdata)
+        return userdata;
+      }
 
-      //throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError('You need to be logged in!');
     },
     addComment: async (parent, { drinkId, text }, context) => {
       if (context.user) {
@@ -143,6 +147,13 @@ const resolvers = {
       }
     
       throw new AuthenticationError('You need to be logged in!');
+    },
+    deleteDrink: async (parent, { drinkId }, context) => {
+      const deletedDrink = await Drink.findOneAndDelete(
+        { _id: drinkId }
+      )
+
+      return deletedDrink;
     }
   }
 };

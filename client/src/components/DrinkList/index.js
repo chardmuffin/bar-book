@@ -1,6 +1,4 @@
-import React from "react";
 import { Container, Card } from "react-bootstrap";
-
 import { Link } from 'react-router-dom'
 
 // drink list is called to display a list of drink cards.
@@ -43,11 +41,11 @@ const DrinkList = ({ drinks }) => {
       
       {drinks &&
         drinks.map(drink => (
-          // link to the SingleDrink page and send the drink with state
+          // link to the SingleDrink page and send the drink as state
           <Link
             to={`/drink/${drink._id ? drink._id : drink.alternateId}`}
-            state={{ drink: drink }}
             key={drink._id ? drink._id : drink.alternateId}
+            state={{ drink }}
           >
             <Card  border="dark" bg="dark">
               {drink.thumbnail && <Card.Img src={drink.thumbnail} alt={drink.name}/>}

@@ -12,15 +12,12 @@ const Home = () => {
 
   return (
     <main>
-      <div className='flex-row justify-space-between'>
-        <div className='col-12 mb-3'>
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-              <DrinkList drinks={drinks}></DrinkList>
-          )}
-        </div>
-      </div>
+      <h3 className='my-3' style={{textAlign: "center"}}>Recently Viewed</h3>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+          <DrinkList drinks={drinks}></DrinkList>
+      )}
     </main>
   );
 };

@@ -19,7 +19,7 @@ const drinkSchema = new Schema(
       type: String,
       required: true,
       minlength: 1,
-      maxlength: 280
+      maxlength: 800
     },
     ingredients: {
       type: [String],
