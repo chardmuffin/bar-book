@@ -88,7 +88,7 @@ a {
 /* =============================overwrite/add to bootstrap components============================ */
 
 .footer {
-  background-color: var(--darker);
+  background-color: var(--dark);
 }
 
 .card {
