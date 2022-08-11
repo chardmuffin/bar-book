@@ -84,11 +84,17 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  color: var(--light);
+  text-decoration: none;
+  cursor: default;
+}
+
 
 /* =============================overwrite/add to bootstrap components============================ */
 
-.footer {
-  background-color: var(--darker);
+.navbar {
+  background-color: var(--dark);
 }
 
 .card {
@@ -101,8 +107,9 @@ a {
 }
 
 .card-header {
-  background-color: none;
+  background-color: transparent;
   border-bottom: none;
+  padding: 8px 0px;
 }
 
 .card-header-single-drink {

@@ -16,8 +16,11 @@ const Home = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
+        !drinks.length ? (
+          <h5 style={{textAlign: "center", marginTop: "25vh"}}>No Recent Drinks!</h5>
+        ) : (
           <DrinkList drinks={drinks}></DrinkList>
-      )}
+      ))}
     </main>
   );
 };

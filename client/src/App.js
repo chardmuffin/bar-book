@@ -53,6 +53,7 @@ function App() {
               </Route>
             </Routes>
           </div>
+          <div className='my-5 py-5'></div>
           <Footer />
         </div>
       </Router>
