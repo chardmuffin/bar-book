@@ -101,8 +101,8 @@ const SingleDrink = drink => {
       ) : (
         <Card className="bg-dark text-white">
         <Container className='card-content-container'>
-          <Card.Header>
-            <Card.Title>{currentDrink.name}</Card.Title>
+          <Card.Header className='card-header-single-drink'>
+            <Card.Title className='title-single-drink'>{currentDrink.name}</Card.Title>
             <Link to={`/profile/${currentDrink.username}`} className="card-subtitle">
               <Card.Subtitle>by {currentDrink.username}</Card.Subtitle>
             </Link>
@@ -111,12 +111,12 @@ const SingleDrink = drink => {
             }
           </Card.Header>
           <Card.Body>
-            <ol>
+            <ol className='ingredients-single-drink'>
               {currentDrink.ingredients?.map((ingredient, index) => (
                 <li key={index}>{ingredient}<span>{currentDrink.measurements[index]}</span></li>
               ))}
             </ol>
-            <Card.Text>Served in a <span>{currentDrink.glass}</span>.</Card.Text>
+            <Card.Text className='glass-text'>Served in a <span>{currentDrink.glass}</span>.</Card.Text>
             <Card.Text>{currentDrink.instructions}</Card.Text>
           </Card.Body>
           <Card.Img src={currentDrink.thumbnail} alt="drink image" />

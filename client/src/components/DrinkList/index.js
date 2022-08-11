@@ -58,7 +58,7 @@ const DrinkList = ({ drinks }) => {
                     {drink.username !== "TheCocktailDB.com" && <Card.Subtitle className="created-on">Created on {drink.createdAt}</Card.Subtitle>}
                   </Card.Header>
                   <Card.Body>
-                    <Card.Text>Served in a <span>{drink.glass}</span>:</Card.Text>
+                    <Card.Text className="glass-text">Served in a <span>{drink.glass}</span>:</Card.Text>
                       <ol>
                         {drink.ingredients.map((ingredient, index) => (
                           <li key={index}>{ingredient}<span>{drink.measurements[index]}</span></li>
