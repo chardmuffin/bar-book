@@ -3,10 +3,11 @@
   --secondary: #904fc5;
   --tertiary: #b2c2c1;
   --quatrinary: #cadbda;
-  --light: #e1f5f4;
-  --bs-dark: #0e0e0e;
-  --bs-dark-rgb: rgb(15, 15, 15);
-  --dark: #0e0e0e;
+  --light: #FAF9EF;
+  --bs-dark: #100713;
+  --bs-dark-rgb: rgb(16, 7, 19);
+  --dark: #100713;
+  --dark-transparent: rgba(16, 7, 19, 0.7);
   --error: rgb(228, 46, 1);
   --border-radius: 0.3rem;
   --spacing-one: calc(1rem * 0.25);
@@ -95,9 +96,18 @@ a {
   overflow: auto;
 }
 
+.card-content-container {
+  background-color: var(--dark-transparent);
+}
+
 .card-header {
-  background-color: rgba(15, 15, 15, 0.6);
-  
+  background-color: none;
+  border-bottom: none;
+}
+
+.card-header-single-drink {
+  border-bottom: 1px solid var(--light);
+  padding-bottom: 1rem;
 }
 
 .card-title {
@@ -105,14 +115,26 @@ a {
   font-size: 1.5rem;
 }
 
+.title-single-drink {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
 .card-subtitle {
   font-size: .8rem;
   float: right;
 }
 
+.ingredients-single-drink {
+  margin: 1.5rem auto;
+}
+
 .card-body {
-  background-color: rgba(15, 15, 15, 0.6);
   font-size: .95rem;
+}
+
+.glass-text {
+  padding-bottom: 1rem;
 }
 
 .card-body ol span {
@@ -127,5 +149,5 @@ a {
 }
 
 .card-text span {
-  font-weight: bold;
+  font-style: italic;
 }
