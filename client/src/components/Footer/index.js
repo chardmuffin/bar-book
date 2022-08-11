@@ -7,7 +7,7 @@ import { faBook, faMagnifyingGlass, faCirclePlus, faUser, faMartiniGlass } from 
 
 const Footer = () => {
   return (
-    <Navbar bg="dark" variant="dark" fixed="bottom">
+    <Navbar variant="dark" fixed="bottom">
       <Nav className='container-fluid justify-content-around'>
         <Nav.Link href="/"><FontAwesomeIcon icon={ faMartiniGlass } /></Nav.Link>
         <Nav.Link href="/search"><FontAwesomeIcon icon={ faMagnifyingGlass } /></Nav.Link>

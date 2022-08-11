@@ -67,7 +67,11 @@ const SearchDrinks = () => {
           </Form.Group>
         </Form>
       </Container>
-      <DrinkList drinks={searchedDrinks}></DrinkList>
+      {!searchedDrinks.length ? (
+          <h5 style={{textAlign: "center", marginTop: "25vh"}}>Search for a drink!</h5>
+        ) : (
+          <DrinkList drinks={searchedDrinks}></DrinkList>
+      )}
     </main>
   );
 };
