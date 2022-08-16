@@ -40,7 +40,7 @@ const Login = (props) => {
   return (
     <main className='flex-row justify-center mb-4'>
       <Link to="/signup"><Button variant="success" className='float-right'>Sign up</Button></Link>
-      <h2>Log In</h2>
+      <h3>Log In</h3>
       <Form onSubmit={handleFormSubmit}>
         <Form.Floating className="mb-3">
           <Form.Control

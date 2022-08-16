@@ -3,6 +3,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink, useReactiv
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer';
+import Header from './components/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import NoMatch from './pages/NoMatch';
@@ -37,17 +38,17 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className="flex-column justify-flex-start min-100-vh">
-          <div className="container">
+          <Header />
+          <div className='my-3 py-4'></div>
             <Routes>
               <Route
                 path="/"
                 element={<Home />}
               />
-              <Route
-                path="/search"
-                element={<SearchDrinks />}
-              />
+              <Route path="/search">
+                <Route path=":searchInput" element={<SearchDrinks />}/>
+                <Route path="" element={<SearchDrinks />}/>
+              </Route>
               <Route
                 path="/create-drink"
                 element={<CreateDrink />}
@@ -74,10 +75,8 @@ function App() {
               </Route>
 
             </Routes>
-          </div>
           <div className='my-5 py-5'></div>
           <Footer />
-        </div>
       </Router>
     </ApolloProvider>
   );

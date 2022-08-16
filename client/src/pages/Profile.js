@@ -18,7 +18,7 @@ const Profile = () => {
   }
 
   return (
-    <div>
+    <main>
       <div className="flex-row mb-3">
         <h3 className="bg-dark text-secondary p-3 display-inline-block">
           {user.username}
@@ -39,7 +39,7 @@ const Profile = () => {
           />
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

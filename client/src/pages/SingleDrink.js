@@ -69,7 +69,7 @@ const SingleDrink = drink => {
         variables: { newDrink: { ...locationDrink } },
       })
 
-      //console.log("drink not found in db, added:", results.data.addDrink)
+      console.log("drink not found in db, added:", results.data.addDrink)
       
       setCurrentDrink(results.data.addDrink);
     }
