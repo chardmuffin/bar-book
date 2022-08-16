@@ -3,9 +3,13 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import { Link } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../utils/mutations';
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
+  const [login, { error }] = useMutation(LOGIN_USER);
 
   // update state based on form input changes
   const handleChange = (event) => {
@@ -18,65 +22,41 @@ const Login = (props) => {
   };
 
   // submit form
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async event => {
     event.preventDefault();
-
-    // clear form values
-    setFormState({
-      email: '',
-      password: '',
-    });
+  
+    try {
+      const { data } = await login({
+        variables: { ...formState }
+      });
+  
+      console.log(data);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
     <main className='flex-row justify-center mb-4'>
-      <div className='col-12 col-md-6'>
-        <div className='card'>
-          <h4 className='card-header'>Login</h4>
-          <div className='card-body'>
-            <form onSubmit={handleFormSubmit}>
-              <input
-                className='form-input'
-                placeholder='Your email'
-                name='email'
-                type='email'
-                id='email'
-                value={formState.email}
-                onChange={handleChange}
-              />
-              <input
-                className='form-input'
-                placeholder='******'
-                name='password'
-                type='password'
-                id='password'
-                value={formState.password}
-                onChange={handleChange}
-              />
-              <button className='btn d-block w-100' type='submit'>
-                Submit
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
+      <Link to="/signup"><Button variant="success" className='float-right'>Sign up</Button></Link>
+      <h2>Log In</h2>
       <Form onSubmit={handleFormSubmit}>
-        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+        <Form.Group as={Row} className="mb-3" controlId="email">
+        
           <Form.Label column sm={2}>
             Email
           </Form.Label>
           <Col sm={10}>
-            <Form.Control type="email" value={formState.email} placeholder="Email" />
+            <Form.Control type="email" name="email" value={formState.email} placeholder="Your email" onChange={handleChange} />
           </Col>
         </Form.Group>
 
-        <Form.Group as={Row} className="mb-3" controlId="formHorizontalPassword">
+        <Form.Group as={Row} className="mb-3" controlId="password">
           <Form.Label column sm={2}>
             Password
           </Form.Label>
           <Col sm={10}>
-            <Form.Control type="password" value={formState.password} placeholder="Password" />
+            <Form.Control type="password" name="password" value={formState.password} placeholder="Password" onChange={handleChange}/>
           </Col>
         </Form.Group>
 
@@ -116,10 +96,11 @@ const Login = (props) => {
 
         <Form.Group as={Row} className="mb-3">
           <Col sm={{ span: 10, offset: 2 }}>
-            <Button type="submit">Sign up</Button>
+            <Button type="submit">Log In</Button>
           </Col>
         </Form.Group>
       </Form>
+      {error && <div>Login failed!</div>}
     </main>
   );
 };

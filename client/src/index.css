@@ -19,7 +19,7 @@
 
 * {
   box-sizing: border-box;
-  
+  max-width: 950px;
 }
 
 html,
@@ -90,6 +90,12 @@ a:hover {
   cursor: default;
 }
 
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
 
 /* =============================overwrite/add to bootstrap components============================ */
 

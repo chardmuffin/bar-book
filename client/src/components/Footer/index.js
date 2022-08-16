@@ -12,8 +12,8 @@ const Footer = () => {
         <Nav.Link href="/"><FontAwesomeIcon icon={ faMartiniGlass } /></Nav.Link>
         <Nav.Link href="/search"><FontAwesomeIcon icon={ faMagnifyingGlass } /></Nav.Link>
         <Nav.Link href="/create-drink"><FontAwesomeIcon icon={ faCirclePlus } /></Nav.Link>
-        <Nav.Link href="/signup"><FontAwesomeIcon icon={ faBook } /></Nav.Link>
-        <Nav.Link href="/profile"><FontAwesomeIcon icon={ faUser } /></Nav.Link>
+        <Nav.Link href={"loggedIn" ? "/barbooks" : "/login"}><FontAwesomeIcon icon={ faBook } /></Nav.Link>
+        <Nav.Link href={"loggedIn" ? "/profile" : "/login"}><FontAwesomeIcon icon={ faUser } /></Nav.Link>
       </Nav>
     </Navbar>
   );

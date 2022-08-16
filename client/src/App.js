@@ -1,10 +1,11 @@
 import React from 'react';
-import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink, useReactiveVar } from '@apollo/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import NoMatch from './pages/NoMatch';
+import BarBooks from './pages/BarBooks';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 import CreateDrink from './pages/CreateDrink';
@@ -40,6 +41,14 @@ function App() {
                 element={<CreateDrink />}
               />
               <Route
+                path="/barbooks"
+                element={<BarBooks />}
+              />
+              <Route
+                path="/login"
+                element={<Login />}
+              />
+              <Route
                 path="/signup"
                 element={<Signup />}
               />
@@ -51,6 +60,7 @@ function App() {
                 <Route path=":username" element={<Profile />} />
                 <Route path="" element={<Profile />} />
               </Route>
+
             </Routes>
           </div>
           <div className='my-5 py-5'></div>
