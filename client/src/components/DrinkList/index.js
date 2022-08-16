@@ -33,7 +33,7 @@ import { Link } from 'react-router-dom'
 const DrinkList = ({ drinks }) => {
 
   if (!drinks.length) {
-    return <h5 style={{textAlign: "center", marginTop: "25vh"}}>None Found!</h5>;
+    return <h5 style={{textAlign: "center", margin: "8vh"}}>None Found!</h5>;
   }
 
   return (

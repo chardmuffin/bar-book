@@ -97,6 +97,10 @@ a:hover {
   float: left;
 }
 
+.floating-label {
+  color: var(--dark);
+}
+
 /* =============================overwrite/add to bootstrap components============================ */
 
 .navbar {

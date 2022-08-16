@@ -35,6 +35,7 @@ const SearchDrinks = () => {
         //remove blank items
         const filteredIngredients = ingredients.filter(Boolean);
         const filteredMeasurements = measurements.filter(Boolean);
+        //TODO standardize measurements here
 
         return {
           alternateId: drink.idDrink,
@@ -62,7 +63,6 @@ const SearchDrinks = () => {
       <Container>
         <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Search for a Drink</Form.Label>
             <Form.Control type="textarea" rows={1} placeholder="old fashioned" onChange={onSubmit} />
           </Form.Group>
         </Form>

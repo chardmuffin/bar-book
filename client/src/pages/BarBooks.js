@@ -4,7 +4,7 @@ const BarBooks = () => {
 
   return (
     <main>
-      My BarBooks
+      <h3>My BarBooks</h3>
     </main>
   )
 }

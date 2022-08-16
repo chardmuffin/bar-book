@@ -20,16 +20,16 @@ const Profile = () => {
   return (
     <div>
       <div className="flex-row mb-3">
-        <h2 className="bg-dark text-secondary p-3 display-inline-block">
-          Viewing {user.username}'s profile.
-        </h2>
+        <h3 className="bg-dark text-secondary p-3 display-inline-block">
+          {user.username}
+        </h3>
       </div>
 
       <div className="flex-row justify-space-between mb-3">
         <div className="col-12 mb-3 col-lg-8">
           {user.authoredDrinks
-          ? <><h3>{user.username}'s creations: </h3><DrinkList drinks={user.authoredDrinks} /></>
-          : <h3>{user.username} has not created any drinks yet.</h3>}
+          ? <><h5>{user.username}'s creations: </h5><DrinkList drinks={user.authoredDrinks} /></>
+          : <h5>{user.username} has not created any drinks yet.</h5>}
         </div>
         <div className="col-12 col-lg-3 mb-3">
           <FriendList

@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
+import Auth from '../utils/auth';
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
@@ -30,7 +31,7 @@ const Login = (props) => {
         variables: { ...formState }
       });
   
-      console.log(data);
+      Auth.login(data.login.token)
     } catch (e) {
       console.error(e);
     }
@@ -41,24 +42,29 @@ const Login = (props) => {
       <Link to="/signup"><Button variant="success" className='float-right'>Sign up</Button></Link>
       <h2>Log In</h2>
       <Form onSubmit={handleFormSubmit}>
-        <Form.Group as={Row} className="mb-3" controlId="email">
-        
-          <Form.Label column sm={2}>
-            Email
-          </Form.Label>
-          <Col sm={10}>
-            <Form.Control type="email" name="email" value={formState.email} placeholder="Your email" onChange={handleChange} />
-          </Col>
-        </Form.Group>
+        <Form.Floating className="mb-3">
+          <Form.Control
+            id="email"
+            type="email"
+            name="email"
+            value={formState.email}
+            placeholder="name@example.com"
+            onChange={handleChange}
+          />
+          <label className="floating-label" htmlFor='email'>Email</label>
+        </Form.Floating>
 
-        <Form.Group as={Row} className="mb-3" controlId="password">
-          <Form.Label column sm={2}>
-            Password
-          </Form.Label>
-          <Col sm={10}>
-            <Form.Control type="password" name="password" value={formState.password} placeholder="Password" onChange={handleChange}/>
-          </Col>
-        </Form.Group>
+        <Form.Floating className="mb-3">
+          <Form.Control
+            id="password"
+            type="password"
+            name="password"
+            value={formState.password}
+            placeholder="Password"
+            onChange={handleChange}
+          />
+          <label className="floating-label" htmlFor='password'>Password</label>
+        </Form.Floating>
 
         <fieldset>
           <Form.Group as={Row} className="mb-3">
