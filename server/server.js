@@ -46,9 +46,6 @@ const startApolloServer = async (typeDefs, resolvers) => {
       console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`)
     });
 
-
-
-
     //ran once to seed production
     //
     //
