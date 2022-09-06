@@ -3,7 +3,7 @@
     "concurrently": "^7.3.0"
   },
   "scripts": {
-    "start": "cd server && npm run start",
+    "start": "cd server && npm run watch",
     "develop": "concurrently \"npm start\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
