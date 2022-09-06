@@ -31,22 +31,18 @@ const Header = () => {
     }
   }, [url])
 
-  console.log(isLoginPage)
-
   return (
     (!isLoginPage) ?
       (<Navbar variant="dark" fixed="top">
-        <Nav className='container-fluid justify-content-around'>
+        <Nav className='container-fluid justify-content-between px-2'>
           <FontAwesomeIcon icon={ faMagnifyingGlass } />
           <Link to="/search">
             <Form onSubmit={onSubmit}>
-              <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Control type="textarea" rows={1} placeholder="old fashioned" onChange={onSubmit} />
-              </Form.Group>
+              <Form.Control type="textarea" rows={1} placeholder="old fashioned" onChange={onSubmit} onClick={onSubmit} />
             </Form>
           </Link>
           <Link to={ Auth.loggedIn() ? `/profile/${Auth.getProfile().data.username}` : "/login" }>
-            {Auth.loggedIn() ? <FontAwesomeIcon icon={ faUser } /> : <Button variant="success" className='float-right'>Log In</Button>}
+            {Auth.loggedIn() ? <FontAwesomeIcon icon={ faUser } /> : <Button variant="success" size='sm' >Log In</Button>}
           </Link>
         </Nav>
       </Navbar>

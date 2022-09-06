@@ -37,13 +37,13 @@ const typeDefs = gql`
 
   type Drink {
     _id: ID
-    alternateId: ID
     name: String
     thumbnail: String
     instructions: String
     ingredients: [String]
     measurements: [String]
     glass: String
+    isVariation: Boolean
     createdAt: String
     username: String
     commentCount: Int
@@ -51,7 +51,6 @@ const typeDefs = gql`
   }
 
   input drinkInput {
-    alternateId: ID,
     name: String!,
     thumbnail: String,
     instructions: String!,
@@ -64,7 +63,8 @@ const typeDefs = gql`
   type Query {
     me: User
     drinks: [Drink]
-    drink(_id: ID!, alternateId: ID): Drink
+    drink(_id: ID!): Drink
+    drinkSearch(nameInput: String): [Drink]
     users: [User]
     user(username: String!): User
     comments(drinkId: String): [Comment]

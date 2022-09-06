@@ -28,13 +28,13 @@ export const SAVE_DRINK = gql`
   mutation addDrink($newDrink: drinkInput!) {
     addDrink(newDrink: $newDrink) {
       _id
-      alternateId
       name
       thumbnail
       instructions
       ingredients
       measurements
       glass
+      isVariation
       createdAt
       username
       commentCount

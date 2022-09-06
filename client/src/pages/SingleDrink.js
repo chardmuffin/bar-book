@@ -2,17 +2,14 @@ import { useQuery } from '@apollo/client';
 import { QUERY_DRINK } from '../utils/queries';
 import Card from 'react-bootstrap/Card';
 import { Container } from 'react-bootstrap';
-import { Link, useParams, useLocation } from 'react-router-dom';
-import { SAVE_DRINK } from '../utils/mutations';
-import { useMutation } from "@apollo/client";
-import { useState, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 // SingleDrink is a page with detail on a single drink.
 // Page is linked to from DrinkList component
-// the drinks from the args may be in format:
+// the drinks from the args are in format:
 // drink {
-//   _id : String representing unique id of the drink.         WARNING: drinks from API The CocktailDB.com do not have _id yet!
-//   alternateId : drinks from API The CocktailDB.com have this, is unique
+//   _id : String representing unique id of the drink.
 //   name : String name of the drink
 //   thumbnail : String href for the drink picture
 //   instructions : String for written instructions how to make drink
@@ -36,67 +33,65 @@ import { useState, useEffect } from 'react'
 //     }
 //   }
 // }
-
-// TODO
-// drinks from API TheCocktailDB.com need to be added to this db once viewed.    (to display as "recently viewed drinks" for home page),
-// if a drink from DrinkList is clicked/tapped, call mutation addDrink to save the current drink to the DB 
-// WARNING: drinks from API The CocktailDB.com do not have _id yet!
-const SingleDrink = drink => {
+const SingleDrink = () => {
 
   const [currentDrink, setCurrentDrink] = useState(null)
 
-  //locationDrink will only have a value if the SingleDrink page was navigated to from a DrinkList
-  const useLocationState = useLocation().state || {}
-  const locationDrink = useLocationState.drink;
-  const [addDrink] = useMutation(SAVE_DRINK);
-
   const _id = useParams().id;
-
-  // NOTE: if the _id.length <= 7, QUERY_DRINK will automatically query for alternateId instead!
   const { error, loading, data } = useQuery(QUERY_DRINK, {
-    
     variables: { id: _id }
-    // OR:     { alternateId: _id }
   })
+  
+  // if the query has an error
+  if (error) console.log("error", error.message);
+
+  //add the current drink to recently viewed drinks if not already
+  useEffect(() => {
+    if (currentDrink) {
+      //get drinkHistory from localStorage
+      let drinkHistory = JSON.parse(localStorage.getItem("drinkHistory"));
+
+      // start a drinkHistory if empty
+      if (drinkHistory === null) {
+        drinkHistory = [currentDrink];
+      }
+      else {
+        // if drinkHistory not empty, see if drink is already in history
+        const index = drinkHistory.findIndex((drink) => {
+          return currentDrink._id === drink._id;
+        });
+        if (index !== -1) {
+          // drink is already in history, let's remove it and...
+          drinkHistory.splice(index, 1);
+        }
+        // add drink to top of history
+        drinkHistory.push(currentDrink);
+
+        // remove oldest search item if more than 15 items
+        if (drinkHistory.length > 15) {
+          drinkHistory.shift();
+        }
+      }
+
+      //save to local storage
+      localStorage.setItem("drinkHistory", JSON.stringify(drinkHistory));
+    }
+  }, [currentDrink])
 
   useEffect(() => {
-
-    // declare the async func to add drink to db and set the newly added drink as current
-    const createNewDrink = async () => {
-      //console.log("drink not found in db, adding", locationDrink.alternateId);
-
-      const results = await addDrink({
-        variables: { newDrink: { ...locationDrink } },
-      })
-
-      console.log("drink not found in db, added:", results.data.addDrink)
-      
-      setCurrentDrink(results.data.addDrink);
+    // set the currentDrink
+    try{
+      setCurrentDrink(data?.drink)
+    } catch (err) {
+      console.error(err);
     }
 
-    // if the query has an error
-    if (error) console.log("error", error.message);
-
-    // if the query finds the drink in db, set it to the currentDrink
-    // if query finds empty drink, create new drink from state to the db
-    // console.log("data", data)
-    if (data) {
-      if (data.drink) {
-        console.log("db match found, displaying:", data.drink)
-        setCurrentDrink(data.drink)
-      } 
-      else {
-        createNewDrink()
-          .catch(err => console.log(err))
-      }
-    }
-
-  }, [locationDrink, addDrink, error, data])
+  }, [data])
 
   return (
     // <div>fail</div>
     <main>
-      {currentDrink===null ? (
+      {!currentDrink ? (
         <p>Loading...</p>
       ) : (
         <Card className="bg-dark text-white">

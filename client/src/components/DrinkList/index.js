@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom'
 
 // drink list is called to display a list of drink cards.
 // Component is used in Search.js, Profile.js and anywhere else needing to display cards of drink recipe previews
-// the drinks from the args may be in format:
+// the drinks from the args are an array of drinks in format:
 // drink {
-//   _id : String representing unique id of the drink.         WARNING: drinks from API The CocktailDB.com do not have _id yet!
-//   alternateId : drinks from API The CocktailDB.com have this, is unique
+//   _id : String representing unique id of the drink
 //   name : String name of the drink
 //   thumbnail : String href for the drink picture
 //   instructions : String for written instructions how to make drink
@@ -41,11 +40,10 @@ const DrinkList = ({ drinks }) => {
       
       {drinks &&
         drinks.map(drink => (
-          // link to the SingleDrink page and send the drink as state
+          // link to the SingleDrink page
           <Link
-            to={`/drink/${drink._id ? drink._id : drink.alternateId}`}
-            key={drink._id ? drink._id : drink.alternateId}
-            state={{ drink }}
+            to={`/drink/${drink._id}`}
+            key={drink._id}
           >
             <Card  border="dark" bg="dark">
               {drink.thumbnail && <Card.Img src={drink.thumbnail} alt={drink.name}/>}

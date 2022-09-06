@@ -46,11 +46,12 @@ const resolvers = {
         .populate('comments')
         .sort( { createdAt: -1 });
     },
-    drink: async (parent, { _id, }) => {
-      if (_id.length <= 7) {
-        return Drink.findOne({ alternateId: _id }).populate('comments');
-      }
+    drink: async (parent, { _id }) => {
       return Drink.findOne({ _id }).populate('comments');
+    },
+    drinkSearch: async (parent, { nameInput }) => {
+      const re = new RegExp(`\\b${nameInput}`, 'gi');
+      return Drink.find({ name: re });
     }
   },
   Mutation: {
@@ -80,8 +81,9 @@ const resolvers = {
     addDrink: async (parent, { newDrink }, context) => {
 
       //if this drink already has username "TheCocktailDB.com" then it's from the API
+      //TODO
       if (newDrink.username === "TheCocktailDB.com") {
-        const drinkAdded = await Drink.create({ ...newDrink, alternateId: newDrink.alternateId });
+        const drinkAdded = await Drink.create({ newDrink });
         return drinkAdded;
       }
 

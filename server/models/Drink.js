@@ -3,9 +3,6 @@ const dateFormat = require('../utils/dateFormat');
 
 const drinkSchema = new Schema(
   {
-    alternateId: {
-      type: String
-    },
     name: {
       type: String,
       required: true,
@@ -33,6 +30,11 @@ const drinkSchema = new Schema(
       type: String,
       required: false
     },
+    isVariation: {
+      type: Boolean,
+      default: false,
+      required: true
+    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -59,6 +61,8 @@ const drinkSchema = new Schema(
 drinkSchema.virtual('commentCount').get(function() {
   return this.comments.length;
 });
+
+drinkSchema.index( { name: "text" } )
 
 const Drink = model('Drink', drinkSchema);
 

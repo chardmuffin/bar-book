@@ -1,26 +1,28 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
-import { QUERY_DRINKS } from '../utils/queries';
+import React, { useEffect, useState } from 'react';
 import DrinkList from '../components/DrinkList'
 
 const Home = () => {
+  
+  const [drinks, setDrinks] = useState();
 
-  // use useQuery hook to make query request
-  const { loading, data } = useQuery(QUERY_DRINKS);
-
-  const drinks = data?.drinks || [];
+  useEffect(() => {
+    try {
+      // load drink history for easy access
+      setDrinks(JSON.parse(localStorage.getItem("drinkHistory"))?.reverse());
+      
+    } catch (err) {
+      console.error(err)
+    }
+  }, [])
 
   return (
     <main>
       <h3 className='my-3' style={{textAlign: "center"}}>Recently Viewed</h3>
-      {loading ? (
-        <p>Loading...</p>
+      {!drinks?.length ? (
+        <h5 style={{textAlign: "center", marginTop: "25vh"}}>No Recent Drinks!</h5>
       ) : (
-        !drinks.length ? (
-          <h5 style={{textAlign: "center", marginTop: "25vh"}}>No Recent Drinks!</h5>
-        ) : (
-          <DrinkList drinks={drinks}></DrinkList>
-      ))}
+        <DrinkList drinks={drinks}></DrinkList>
+      )}
     </main>
   );
 };
