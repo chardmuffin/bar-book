@@ -39,7 +39,7 @@ const Signup = () => {
   };
 
   return (
-    <main className='flex-row justify-center mb-4'>
+    <main className='container-fluid'>
       <Form onSubmit={handleFormSubmit}>
         <h2>Account Creation</h2>
         <Form.Group as={Row} className="mb-3" controlId="formHorizontalUsername">

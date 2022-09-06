@@ -16,7 +16,7 @@ const Home = () => {
   }, [])
 
   return (
-    <main>
+    <main className="container-fluid">
       <h3 className='my-3' style={{textAlign: "center"}}>Recently Viewed</h3>
       {!drinks?.length ? (
         <h5 style={{textAlign: "center", marginTop: "25vh"}}>No Recent Drinks!</h5>

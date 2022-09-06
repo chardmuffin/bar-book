@@ -25,7 +25,7 @@ const SearchDrinks = () => {
   }, [data, searchInput])
 
   return (
-    <main>
+    <main className="container-fluid">
       {!searchedDrinks?.length ? (
         <h5 style={{textAlign: "center", marginTop: "12vh"}}>{loading ? "Loading..." : "Search for a drink!"}</h5>
       ) : (

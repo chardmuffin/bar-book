@@ -38,7 +38,7 @@ const Login = (props) => {
   };
 
   return (
-    <main className='flex-row justify-center mb-4'>
+    <main className='container-fluid'>
       <Link to="/signup"><Button variant="success" className='float-right'>Sign up</Button></Link>
       <h3>Log In</h3>
       <Form onSubmit={handleFormSubmit}>
@@ -66,35 +66,7 @@ const Login = (props) => {
           <label className="floating-label" htmlFor='password'>Password</label>
         </Form.Floating>
 
-        <fieldset>
-          <Form.Group as={Row} className="mb-3">
-            <Form.Label as="legend" column sm={2}>
-              Radios
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Check
-                type="radio"
-                label="first radio"
-                name="formHorizontalRadios"
-                id="formHorizontalRadios1"
-              />
-              <Form.Check
-                type="radio"
-                label="second radio"
-                name="formHorizontalRadios"
-                id="formHorizontalRadios2"
-              />
-              <Form.Check
-                type="radio"
-                label="third radio"
-                name="formHorizontalRadios"
-                id="formHorizontalRadios3"
-              />
-            </Col>
-          </Form.Group>
-        </fieldset>
-
-        <Form.Group as={Row} className="mb-3" controlId="formHorizontalCheck">
+        <Form.Group as={Row} className="mb-3" controlId="rememberMe">
           <Col sm={{ span: 10, offset: 2 }}>
             <Form.Check label="Remember me" />
           </Col>

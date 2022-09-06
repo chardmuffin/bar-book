@@ -32,12 +32,6 @@ const userSchema = new Schema(
         ref: "User"
       }
     ],
-    savedDrinks: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Drink"
-      }
-    ],
     authoredDrinks: [
       {
         type: Schema.Types.ObjectId,
@@ -69,6 +63,10 @@ userSchema.methods.isCorrectPassword = async function(password) {
 
 userSchema.virtual('friendCount').get(function() {
   return this.friends.length;
+});
+
+userSchema.virtual('commentCount').get(function() {
+  return this.comments.length;
 });
 
 userSchema.virtual('drinkCount').get(function() {

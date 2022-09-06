@@ -9,7 +9,7 @@ const Footer = () => {
 
   return (
     <Navbar variant="dark" fixed="bottom">
-      <Nav className='container-fluid justify-content-around'>
+      <Nav className='container-fluid justify-content-around mb-2'>
         <Link to="/"><FontAwesomeIcon icon={ faMartiniGlass } /></Link>
         <Link to={Auth.loggedIn() ? "/create-drink" : "/login"}><FontAwesomeIcon icon={ faCirclePlus } /></Link>
         <Link to={Auth.loggedIn() ? "/barbooks" : "/login"}><FontAwesomeIcon icon={ faBook } /></Link>

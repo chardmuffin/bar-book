@@ -30,7 +30,6 @@ const resolvers = {
         .select('-__v -password')
         .populate('friends')
         .populate('comments')
-        .populate('savedDrinks')
         .populate('authoredDrinks');
     },
     user: async(parent, { username }) => {
@@ -38,7 +37,6 @@ const resolvers = {
         .select('-__v -password')
         .populate('friends')
         .populate('comments')
-        .populate('savedDrinks')
         .populate('authoredDrinks');
     },
     drinks: async () => {

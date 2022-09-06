@@ -36,7 +36,7 @@ const Header = () => {
       (<Navbar variant="dark" fixed="top">
         <Nav className='container-fluid justify-content-between px-2'>
           <FontAwesomeIcon icon={ faMagnifyingGlass } />
-          <Link to="/search">
+          <Link className="flex-grow-1 px-2" to="/search">
             <Form onSubmit={onSubmit}>
               <Form.Control type="textarea" rows={1} placeholder="old fashioned" onChange={onSubmit} onClick={onSubmit} />
             </Form>

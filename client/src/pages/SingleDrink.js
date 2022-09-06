@@ -90,7 +90,7 @@ const SingleDrink = () => {
 
   return (
     // <div>fail</div>
-    <main>
+    <main className="container-fluid">
       {!currentDrink ? (
         <p>Loading...</p>
       ) : (

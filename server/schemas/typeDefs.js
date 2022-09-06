@@ -22,10 +22,10 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
+    commentCount: Int
     comments: [Comment]
     friendCount: Int
     friends: [User]
-    savedDrinks: [Drink]
     drinkCount: Int
     authoredDrinks: [Drink]
   }

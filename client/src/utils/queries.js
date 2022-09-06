@@ -115,10 +115,12 @@ export const QUERY_USER = gql`
     user(username: $username) {
       _id
       username
+      friendCount
       friends {
         _id
         username
       }
+      drinkCount
       authoredDrinks {
         _id
         name
@@ -143,6 +145,88 @@ export const QUERY_USER = gql`
             createdAt
           }
         }
+      }
+      commentCount
+      comments {
+        _id
+        text
+        username
+        createdAt
+        reactionCount
+        reactions {
+          _id
+          reactionBody
+          username
+        }
+      }
+    }
+  }
+`;
+
+export const QUERY_ME = gql`
+  {
+    me {
+      _id
+      username
+      email
+      friendCount
+      friends {
+        _id
+        username
+      }
+      drinkCount
+      authoredDrinks {
+        _id
+        name
+        thumbnail
+        ingredients
+        measurements
+        instructions
+        glass
+        createdAt
+        username
+        commentCount
+        comments {
+          _id
+          text
+          username
+          createdAt
+          reactionCount
+          reactions {
+            _id
+            reactionBody
+            username
+            createdAt
+          }
+        }
+      }
+      commentCount
+      comments {
+        _id
+        text
+        username
+        createdAt
+        reactionCount
+        reactions {
+          _id
+          reactionBody
+          username
+        }
+      }
+    }
+  }
+`;
+
+export const QUERY_ME_BASIC = gql`
+  {
+    me {
+      _id
+      username
+      email
+      friendCount
+      friends {
+        _id
+        username
       }
     }
   }

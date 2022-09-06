@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
 import DrinkList from '../components/DrinkList';
 import FriendList from '../components/FriendList';
+import Auth from '../utils/auth'
+import { Button } from 'react-bootstrap'
 
 const Profile = () => {
   const { username: userParam } = useParams();
@@ -17,12 +19,19 @@ const Profile = () => {
     return <div>Loading...</div>;
   }
 
+  const logout = event => {
+    event.preventDefault();
+    Auth.logout();
+  };
+
   return (
-    <main>
-      <div className="flex-row mb-3">
-        <h3 className="bg-dark text-secondary p-3 display-inline-block">
+    <main className="container-fluid">
+      <div className="mb-3">
+        <Button className="float-right" variant="success" size='sm' onClick={logout} >Logout</Button>
+        <h3>
           {user.username}
         </h3>
+        
       </div>
 
       <div className="flex-row justify-space-between mb-3">
