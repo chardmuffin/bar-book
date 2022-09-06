@@ -5,6 +5,7 @@ const db = require('./config/connection');
 const { authMiddleware } = require('./utils/auth');
 const path = require('path');
 
+const app = express();
 const PORT = process.env.PORT || 3001;
 
 // create Apollo server to pass in schema data
@@ -14,13 +15,11 @@ const server = new ApolloServer({
   context: authMiddleware
 });
 
-const app = express();
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // create a new instance of Apollo server with GraphQL schema
-const startApolloServer = async (typeDefs, resolvers) => {
+const startApolloServer = (typeDefs, resolvers) => {
   await server.start();
 
   //integrate Apollo server with express application as middleware
@@ -31,7 +30,7 @@ const startApolloServer = async (typeDefs, resolvers) => {
     app.use(express.static(path.join(__dirname, '../client/build')));
   }
 
-  app.get('*', (req, res) => {
+  app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
   });
 
