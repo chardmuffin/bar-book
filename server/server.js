@@ -5,6 +5,7 @@ const db = require('./config/connection');
 const { authMiddleware } = require('./utils/auth');
 const path = require('path');
 
+const app = express();
 const PORT = process.env.PORT || 3001;
 
 // create Apollo server to pass in schema data
@@ -13,8 +14,6 @@ const server = new ApolloServer({
   resolvers,
   context: authMiddleware
 });
-
-const app = express();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
