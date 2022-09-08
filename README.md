@@ -28,16 +28,20 @@ SO THAT I can mix drinks requested by bar patrons in a timely manner.
 * user can create new drinks from scratch (3rd nav bar icon)
 
 ## TODO
+* beautify create new drinks page, add validation
 * user can add various filters to their search
+
 * user submitted drink recipes must have unique name, otherwise it is suggested to submit drink as a variation instead:
-* user can submit variations on drink recipes (i.e. SingleDrink main recipe page has "variations" tab to show/add user submissions - recipe versions)
-    * these are distinct than normal "drinks" in the db (isVariation=true)
+* user can submit variations on drink recipes
+    * belongs to other drinks in the db, add an attribute for all drinks: ```hasVariations: [Drink]```
+    * include view drink variations via bootstrap accordion component in SingleDrink, contains a DrinkList component when expanded
 * user can add recipes to one or more personal "bar book" (4th nav bar icon, like playlists)
 * measurement standardization
     * util function to filter all measurements and convert liter, centiliter, juice of 1 lime, 1 cube sugar, 1 tsp sugar, etc. to standard oz measurements
 * user can search for other users and add as friends
-* user can commment on drink recipes
+* user can commment on drink recipes, comments appear under view variations bootstrap accordion
 
 ## Nice to have
 * first time logging in? Display one-time-only brief slide-show of screenshots demonstrating app usage
 * a rating system for recipes
+* DrinkList - previews of drinks should have responsive height relative to number of ingredients
