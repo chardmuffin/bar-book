@@ -25,12 +25,13 @@ SO THAT I can mix drinks requested by bar patrons in a timely manner.
     * first I combed thru entire API recipe library to use as seeds
     * remove "alternateId" from Drink schema
 * Home page shows recently viewed drinks (up to 15) - from local storage
+* user can create new drinks from scratch (3rd nav bar icon)
 
 ## TODO
-* user can create new drinks from scratch (3rd nav bar icon)
-    * user submitted drink recipes must have unique name, otherwise it is suggested to submit drink as a variation instead:
-    * user can submit variations on drink recipes (i.e. SingleDrink main recipe page has "variations" tab to show/add user submissions - recipe versions)
-        * these are distinct than normal "drinks" in the db (isVariation=true)
+* user can add various filters to their search
+* user submitted drink recipes must have unique name, otherwise it is suggested to submit drink as a variation instead:
+* user can submit variations on drink recipes (i.e. SingleDrink main recipe page has "variations" tab to show/add user submissions - recipe versions)
+    * these are distinct than normal "drinks" in the db (isVariation=true)
 * user can add recipes to one or more personal "bar book" (4th nav bar icon, like playlists)
 * measurement standardization
     * util function to filter all measurements and convert liter, centiliter, juice of 1 lime, 1 cube sugar, 1 tsp sugar, etc. to standard oz measurements
@@ -40,4 +41,3 @@ SO THAT I can mix drinks requested by bar patrons in a timely manner.
 ## Nice to have
 * first time logging in? Display one-time-only brief slide-show of screenshots demonstrating app usage
 * a rating system for recipes
-* user can filter search by user-submitted drinks
