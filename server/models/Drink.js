@@ -10,7 +10,8 @@ const drinkSchema = new Schema(
       maxlength: 40
     },
     thumbnail: {
-      type: String
+      type: String,
+      required: true
     },
     instructions: {
       type: String,

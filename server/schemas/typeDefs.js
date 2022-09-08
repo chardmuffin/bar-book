@@ -51,13 +51,13 @@ const typeDefs = gql`
   }
 
   input drinkInput {
-    name: String!,
-    thumbnail: String,
-    instructions: String!,
-    ingredients: [String]!,
-    measurements: [String]!,
-    glass: String,
-    username: String
+    name: String
+    thumbnail: String
+    instructions: String
+    ingredients: [String]
+    measurements: [String]
+    glass: String
+    isVariation: Boolean
   }
 
   type Query {

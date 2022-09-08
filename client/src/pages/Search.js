@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client';
 import { DRINK_SEARCH } from '../utils/queries';
 
 const SearchDrinks = () => {
-  // create state for holding returned api data
+  // create state for holding returned db data
   const [searchedDrinks, setSearchedDrinks] = useState([]);
 
   // get the search input

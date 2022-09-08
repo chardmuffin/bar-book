@@ -10,7 +10,6 @@ const resolvers = {
           .select('-__v -password')
           .populate('comments')
           .populate('friends')
-          .populate('savedDrinks')
           .populate('authoredDrinks');
 
         return userData;
@@ -78,25 +77,24 @@ const resolvers = {
     },
     addDrink: async (parent, { newDrink }, context) => {
 
-      //if this drink already has username "TheCocktailDB.com" then it's from the API
-      //TODO
-      if (newDrink.username === "TheCocktailDB.com") {
-        const drinkAdded = await Drink.create({ newDrink });
-        return drinkAdded;
-      }
-
-      //else it is an original recipe by the user
+      // add an original recipe by the user
       if (context.user) {
-        let newdrink = await Drink.create({ ...newDrink, username: context.user.username });
+
+        // TODO- validate the thumbnail here and use default image if not a good link
+        if (newDrink.thumbnail === "") {
+          newDrink.thumbnail = "https://images.rawpixel.com/image_800/cHJpdmF0ZS9zdGF0aWMvaW1hZ2Uvd2Vic2l0ZS8yMDIyLTA0L2xyL2ZyYm90dGxlc19iZXZlcmFnZXNfYWxjb2hvbF9kcmluay1pbWFnZS1rejJlNGdvMS5qcGc.jpg?s=nLQBEoCG8tN3jko2Aw-ysfbjHL1TUe1o3jVRGaVxSvc";
+        }
+
+        const newdrink = await Drink.create({ ...newDrink, username: context.user.username });
       
         const userdata = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { authoredDrinks: newdrink._id } },
+          { $addToSet: { authoredDrinks: newdrink } },
           { new: true }
         )
 
-        console.log(userdata)
-        return userdata;
+        console.log("newdrink", newdrink)
+        return newdrink;
       }
 
       throw new AuthenticationError('You need to be logged in!');

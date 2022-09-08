@@ -24,7 +24,7 @@ export const ADD_USER = gql`
   }
 `;
 
-export const SAVE_DRINK = gql`
+export const ADD_DRINK = gql`
   mutation addDrink($newDrink: drinkInput!) {
     addDrink(newDrink: $newDrink) {
       _id
@@ -34,7 +34,6 @@ export const SAVE_DRINK = gql`
       ingredients
       measurements
       glass
-      isVariation
       createdAt
       username
       commentCount

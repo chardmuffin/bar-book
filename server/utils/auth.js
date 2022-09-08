@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config()
 
 //const secret = process.env.SECRET_KEY;
+//TODO - get the .env secret working
 const secret = "notagoodsecret"
 const expiration = '12h';
 
